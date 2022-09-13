@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>Web Lab 1</title>
+        <meta charset="UTF-8">
+        <link rel="icon" type="image/png" href="./img/favicon.png">
+        <link rel="stylesheet" href="./css/styles.css">
+    </head>
+    <body>
+        <header>
+            <img class="header-icon" src="./img/icon.png">
+            <div class="header-text">
+                <h1 id="name" class="name">Суханкин Дмитрий Юрьевич</h1>
+                <p class="name description">P32121, 338925</p>
+                <p class="description">WEB, Lab 1. Вариант 916</p>
+            </div>
+        </header>
+        <main>
+            <img src="./img/graph.png">
+            <form>
+                <label for="Xname">X:</label>
+                <select required class="dropdown" name="Xname" id="X">
+                    <option value="-2">-2</option>
+                    <option value="-1.5">-1.5</option>
+                    <option value="-1">-1</option>
+                    <option value="-0.5">-0.5</option>
+                    <option value="0">-0</option>
+                    <option value="0.5">0.5</option>
+                    <option value="1">1</option>
+                    <option value="1.5">1.5</option>
+                    <option value="2">2</option>
+                </select><br><br>
+                <label for="Yname">Y:</label>
+                <input required class="text-input" placeholder="-3 ... 5" type="text" id="Y" name="Yname"><br><br>
+                <label for="Rname">R:</label>
+                <select required class="dropdown" name="Rname" id="R">
+                    <option value="1">1</option>
+                    <option value="1.5">1.5</option>
+                    <option value="2">2</option>
+                    <option value="2.5">2.5</option>
+                    <option value="3">3</option>
+                </select><br><br>
+                <input class="submit" type="submit" value="Отправить">
+            </form>
+        </main>
+    </body>
+</html>

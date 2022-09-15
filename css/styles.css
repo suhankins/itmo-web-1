@@ -101,9 +101,23 @@ main {
 
 table {
     border: 3px solid #c3a9c7;
+    border-collapse: collapse;
+    margin: 1em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-th {
+tr > * {
     border: 1px solid #674068;
-    padding: 5px;
+    padding: 1em;
+}
+
+.result {
+    border-top: 3px solid #674068;
+}
+
+.misc {
+    border: none;
+    font-size: small;
+    padding: 0.1em;
 }

@@ -98,3 +98,12 @@ main {
     margin: 1%;
     width: 20%;
 }
+
+table {
+    border: 3px solid #c3a9c7;
+}
+
+th {
+    border: 1px solid #674068;
+    padding: 5px;
+}

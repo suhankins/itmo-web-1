@@ -42,21 +42,51 @@ main {
 
 .submit {
     border: none;
-    padding: 1em;
+    padding: 1%;
+    margin: 2%;
+    width: 20%;
     background-color: #04AA6D;
     color: white;
     transition: 0.5s;
+    position: relative;
+}
+
+@keyframes shake {
+    from {
+        left: 0px;
+        background-color: #04AA6D;
+    }
+
+    25% {
+        left: 15px;
+        background-color: red;
+    }
+
+    75% {
+        left: -15px;
+        background-color: red;
+    }
+  
+    to {
+        left: 0px;
+        background-color: #04AA6D;
+    }
 }
 
 .submit:hover {
     background-color: rgb(24, 204, 138);
-    padding: 1.1em;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
     transition: 0.5s;
 }
 
 .dropdown {
     border: none;
-    padding: 1em;
+    padding: 1%;
+    margin: 1%;
+    width: 20%;
 }
 
 .text-input {
@@ -64,5 +94,7 @@ main {
     border-width: 1px;
     border-style: solid;
     border-color: #e9e9ed;
-    padding: 1em;
+    padding: 1%;
+    margin: 1%;
+    width: 20%;
 }

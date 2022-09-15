@@ -17,31 +17,33 @@
         </header>
         <main>
             <img src="./img/graph.png">
-            <form>
-                <label for="Xname">X:</label>
-                <select required class="dropdown" name="Xname" id="X">
+            <form id="form" method="get">
+                <label for="X">X:</label>
+                <select required class="dropdown" name="X" id="X">
                     <option value="-2">-2</option>
                     <option value="-1.5">-1.5</option>
                     <option value="-1">-1</option>
                     <option value="-0.5">-0.5</option>
-                    <option value="0">-0</option>
+                    <option value="0">0</option>
                     <option value="0.5">0.5</option>
                     <option value="1">1</option>
                     <option value="1.5">1.5</option>
                     <option value="2">2</option>
                 </select><br><br>
-                <label for="Yname">Y:</label>
-                <input required class="text-input" placeholder="-3 ... 5" type="text" id="Y" name="Yname"><br><br>
-                <label for="Rname">R:</label>
-                <select required class="dropdown" name="Rname" id="R">
+                <label for="Y">Y:</label>
+                <input required class="text-input" placeholder="-3 ... 5" type="text" id="Y" name="Y"><br><br>
+                <label for="R">R:</label>
+                <select required class="dropdown" name="R" id="R">
                     <option value="1">1</option>
                     <option value="1.5">1.5</option>
                     <option value="2">2</option>
                     <option value="2.5">2.5</option>
                     <option value="3">3</option>
                 </select><br><br>
-                <input class="submit" type="submit" value="Отправить">
+                <input class="submit" id="submit" type="submit" value="Отправить">
             </form>
         </main>
+
+        <script src="./js/script.js"></script>
     </body>
 </html>

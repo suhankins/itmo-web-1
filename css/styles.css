@@ -113,11 +113,11 @@ tr > * {
 }
 
 .result {
-    border-top: 3px solid #674068;
+    border-left: 3px solid #674068;
+    border-right: 3px solid #674068;
 }
 
 .misc {
-    border: none;
     font-size: small;
     padding: 0.1em;
 }

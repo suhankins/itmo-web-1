@@ -1,6 +1,38 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+class Report {
+    public $x;
+    public $y;
+    public $r;
+    public $result;
+    public $current;
+    public $execution;
+    public $table_row;
+
+    private static function area_string($in_area) {
+        if ($in_area) return "Is in area";
+        return "Not in area";
+    }
+    public function __construct($x, $y, $r, $result, $current, $execution) {
+        $this->x = $x;
+        $this->y = $y;
+        $this->r = $r;
+        $this->result = $result;
+        $this->current = $current;
+        $this->execution = $execution;
+
+        $this->table_row = "<tr><td>" . $x . "</td><td>" . $y . "</td><td>" . $r .
+        "</td><td class='result'>" . $this->area_string($result) . "</td><td class='misc'>" . $current .
+        "</td><td class='misc'>" . $execution . " s</td></tr>";
+    }
+}
+
 $time_start = microtime(true);
-function validate($X, $Y, $R) {
+$table_head = '<tr><th>X</th><th>Y</th><th>R</th><th class="result">Result</th><th class="misc">Current time</th><th class="misc">Execution time</th></tr>';
+function validate($x, $y, $r) {
     $valid_x = array(-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2);
     $valid_y = array(
         "lower" => -3,
@@ -8,25 +40,25 @@ function validate($X, $Y, $R) {
     );
     $valid_r = array(1, 1.5, 2, 2.5, 3);
 
-    if (!in_array($X, $valid_x)) {
+    if (!in_array($x, $valid_x)) {
         return false;
     }
-    if (!in_array($R, $valid_r)) {
+    if (!in_array($r, $valid_r)) {
         return false;
     }
-    if (!($Y >= $valid_y["lower"] and $Y <= $valid_y["upper"])) {
+    if (!($y >= $valid_y["lower"] and $y <= $valid_y["upper"])) {
         return false;
     }
     return true;
 }
 
-function in_area($X, $Y, $R) {
+function in_area($x, $y, $r) {
     #     |
     #     | X
     # ----+----
     #     |
     #     |
-    if ($X > 0 and $Y > 0) {
+    if ($x > 0 and $y > 0) {
         return false;
     }
     #     |
@@ -34,7 +66,7 @@ function in_area($X, $Y, $R) {
     # ----+----
     #     | X
     #     |
-    if (($X >= 0 and $X <= $R) and ($Y <= 0 and $Y >= $R/2)) {
+    if (($x >= 0 and $x <= $r) and ($y <= 0 and $y >= $r/2)) {
         return true;
     }
     #     |
@@ -42,7 +74,7 @@ function in_area($X, $Y, $R) {
     # ----+----
     #   X | 
     #     |
-    if (($X <= 0 and $Y <= 0) and (abs($X) + abs($Y) <= $R)) {
+    if (($x <= 0 and $y <= 0) and (abs($x) + abs($y) <= $r)) {
         return true;
     }
     #     |
@@ -50,20 +82,30 @@ function in_area($X, $Y, $R) {
     # ----+----
     #     | 
     #     |
-    if (($X <= 0 and $Y >= 0) and (sqrt($X ** 2 + $Y ** 2) <= $R/2)) {
+    if (($x <= 0 and $y >= 0) and (sqrt($x ** 2 + $y ** 2) <= $r/2)) {
         return true;
     }
     return false;
 }
 
-$X = intval($_GET["X"]);
-$Y = intval($_GET["Y"]);
-$R = intval($_GET["R"]);
+$x = floatval($_GET["X"]);
+$y = floatval($_GET["Y"]);
+$r = flaotval($_GET["R"]);
 
-$validated = validate($X, $Y, $R);
+$validated = validate($x, $y, $r);
 $in_area = null;
+$current_time = null;
+$execution_time = null;
 if ($validated) {
-    $in_area = in_area($X, $Y, $R);
+    $execution_time = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 7);
+    $current_time =  date("j M o G:i:s", time());
+    $in_area = in_area($x, $y, $r);
+    $report = new Report($x, $y, $r, $in_area, $current_time, $execution_time);
+    session_start();
+    if (!isset($_SESSION['data'])) {
+        $_SESSION['data'] = array();
+    }
+    array_push($_SESSION['data'], $report);
 }
 ?>
 <!DOCTYPE html>
@@ -75,64 +117,25 @@ if ($validated) {
     </head>
     <body>
         <main>
+            <a href="index.html" class="submit">Go back</a><br>
             <?php if ($validated): ?>
             <img src="./img/graph.png">
             <h1>Latest result:</h1>
             <table>
-                <tr>
-                    <th>
-                        X
-                    </th>
-                    <td>
-                        <?php echo $X; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Y
-                    </th>
-                    <td>
-                        <?php echo $Y; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        R
-                    </th>
-                    <td>
-                        <?php echo $R; ?>
-                    </td>
-                </tr>
-                <tr class="result">
-                    <th>
-                        Result
-                    </th>
-                    <td>
-                        <?php if ($in_area) {
-                            echo "Is in area";
-                        } else {
-                            echo "Not in area";
-                        } ?>
-                    </td>
-                </tr>
-                <tr class="misc">
-                    <th>
-                        Current time
-                    </th>
-                    <td>
-                        <?php echo time(); ?>
-                    </td>
-                </tr>
-                <tr class="misc">
-                    <th>
-                        Execution time
-                    </th>
-                    <td>
-                        <?php echo microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"] . "s"; ?>
-                    </td>
-                </tr>
+                <?php echo $table_head; ?>
+                <?php echo $report->table_row; ?>
             </table>
             <h1>Previous results:</h1>
+            <table>
+                <?php echo $table_head; ?>
+                <?php
+                for ($i = 0; $i < count($_SESSION['data']) - 1; $i = $i + 1) {
+                    echo $_SESSION['data'][$i]->table_row;
+                }
+            ?>
+            </table>
+            <?php else: ?>
+            <h1>Invalid data</h1>
             <?php endif; ?>
         </main>
     </body>

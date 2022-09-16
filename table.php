@@ -33,6 +33,9 @@ class Report {
 $time_start = microtime(true);
 $table_head = '<tr><th>X</th><th>Y</th><th>R</th><th class="result">Result</th><th class="misc">Current time</th><th class="misc">Execution time</th></tr>';
 function validate($x, $y, $r) {
+    if ($x == null or $y == null or $r == null) {
+        return false;
+    }
     $valid_x = array(-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2);
     $valid_y = array(
         "lower" => -3,
@@ -89,8 +92,17 @@ function in_area($x, $y, $r) {
 }
 
 $x = floatval($_GET["X"]);
+if ((string)$x != (string)$_GET["X"]) {
+    $x = null;
+}
 $y = floatval($_GET["Y"]);
+if ((string)$y != (string)$_GET["Y"]) {
+    $y = null;
+}
 $r = floatval($_GET["R"]);
+if ((string)$r != (string)$_GET["R"]) {
+    $r = null;
+}
 
 $validated = validate($x, $y, $r);
 $in_area = null;

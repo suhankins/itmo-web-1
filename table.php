@@ -90,7 +90,7 @@ function in_area($x, $y, $r) {
 
 $x = floatval($_GET["X"]);
 $y = floatval($_GET["Y"]);
-$r = flaotval($_GET["R"]);
+$r = floatval($_GET["R"]);
 
 $validated = validate($x, $y, $r);
 $in_area = null;

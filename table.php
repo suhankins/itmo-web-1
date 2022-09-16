@@ -91,16 +91,19 @@ function in_area($x, $y, $r) {
     return false;
 }
 
-$x = floatval($_GET["X"]);
-if ((string)$x != (string)$_GET["X"]) {
+$raw_x = str_replace(",", ".", (string)$_GET["X"]);
+$x = floatval($raw_x);
+if ((string)$x != $raw_x) {
     $x = null;
 }
-$y = floatval($_GET["Y"]);
-if ((string)$y != (string)$_GET["Y"]) {
+$raw_y = str_replace(",", ".", (string)$_GET["Y"]);
+$y = floatval($raw_y);
+if ((string)$y != $raw_y) {
     $y = null;
 }
-$r = floatval($_GET["R"]);
-if ((string)$r != (string)$_GET["R"]) {
+$raw_r = str_replace(",", ".", (string)$_GET["R"]);
+$r = floatval($raw_r);
+if ((string)$r != $raw_r) {
     $r = null;
 }
 
